@@ -1,14 +1,17 @@
 package com.bccestari.rick_sanchez_inventions_service.controllers;
 
 import com.bccestari.rick_sanchez_inventions_service.models.Inventions;
+import com.bccestari.rick_sanchez_inventions_service.models.InventionsDto;
 import com.bccestari.rick_sanchez_inventions_service.repositories.InventionsRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -33,4 +36,39 @@ public class InventionsController {
 
 
     }
+    @PostMapping
+    public ResponseEntity<Object> createInventions(
+            @Valid @RequestBody InventionsDto inventionsDto,
+            BindingResult result) {
+        double price = 0;
+        try {
+            price = Double.parseDouble(inventionsDto.getPrice());
+        }catch (Exception ex){
+            result.addError(new FieldError("inventionsDto", "price",
+                    "The price should be a number"));
+        }
+
+        if(result.hasErrors()) {
+            var errorsList = result.getAllErrors();
+            var errorsMap = new HashMap<String, String>();
+
+            for (int i = 0; i < errorsList.size(); i++) {
+                var error = (FieldError) errorsList.get(i);
+                errorsMap.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errorsMap);
+        }
+
+        Inventions inventions = new Inventions();
+
+        inventions.setName(inventionsDto.getName());
+        inventions.setCategory(inventionsDto.getCategory());
+        inventions.setPrice(price);
+        inventions.setDescription(inventionsDto.getDescription());
+        inventions.setCreatedAt(new Date());
+
+        repo.save(inventions);
+        return ResponseEntity.ok(inventions);
+    }
+
 }
