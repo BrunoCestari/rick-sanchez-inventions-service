@@ -15,7 +15,6 @@ public class Inventions {
     private int id;
 
     private String name;
-    private String brand;
     private String category;
     private double price;
 
@@ -37,14 +36,6 @@ public class Inventions {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public String getCategory() {
