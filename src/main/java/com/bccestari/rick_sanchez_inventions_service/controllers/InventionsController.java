@@ -1,7 +1,7 @@
 package com.bccestari.rick_sanchez_inventions_service.controllers;
 
-import com.bccestari.rick_sanchez_inventions_service.models.Inventions;
-import com.bccestari.rick_sanchez_inventions_service.models.InventionsDto;
+import com.bccestari.rick_sanchez_inventions_service.models.Invention;
+import com.bccestari.rick_sanchez_inventions_service.models.InventionDto;
 import com.bccestari.rick_sanchez_inventions_service.repositories.InventionsRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class InventionsController {
     private InventionsRepository repo;
 
     @GetMapping
-    public List<Inventions> getInventions() {
+    public List<Invention> getInventions() {
         return repo.findAll();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Inventions> getInventions(@PathVariable int id) {
-        Inventions invention = repo.findById(id).orElse(null);
+    public ResponseEntity<Invention> getInventions(@PathVariable int id) {
+        Invention invention = repo.findById(id).orElse(null);
         if (invention == null) {
             return ResponseEntity.notFound().build();
         }
@@ -38,13 +38,13 @@ public class InventionsController {
     }
     @PostMapping
     public ResponseEntity<Object> createInventions(
-            @Valid @RequestBody InventionsDto inventionsDto,
+            @Valid @RequestBody InventionDto inventionDto,
             BindingResult result) {
         double price = 0;
         try {
-            price = Double.parseDouble(inventionsDto.getPrice());
+            price = Double.parseDouble(inventionDto.getPrice());
         }catch (Exception ex){
-            result.addError(new FieldError("inventionsDto", "price",
+            result.addError(new FieldError("inventionDto", "price",
                     "The price should be a number"));
         }
 
@@ -59,25 +59,25 @@ public class InventionsController {
             return ResponseEntity.badRequest().body(errorsMap);
         }
 
-        Inventions inventions = new Inventions();
+        Invention invention = new Invention();
 
-        inventions.setName(inventionsDto.getName());
-        inventions.setCategory(inventionsDto.getCategory());
-        inventions.setPrice(price);
-        inventions.setDescription(inventionsDto.getDescription());
-        inventions.setCreatedAt(new Date());
+        invention.setName(inventionDto.getName());
+        invention.setCategory(inventionDto.getCategory());
+        invention.setPrice(price);
+        invention.setDescription(inventionDto.getDescription());
+        invention.setCreatedAt(new Date());
 
-        repo.save(inventions);
-        return ResponseEntity.ok(inventions);
+        repo.save(invention);
+        return ResponseEntity.ok(invention);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Object> updateInvention(
             @PathVariable int id,
-            @Valid @RequestBody InventionsDto inventionDto,
+            @Valid @RequestBody InventionDto inventionDto,
             BindingResult result
     )   {
-        Inventions invention = repo.findById(id).orElse(null);
+        Invention invention = repo.findById(id).orElse(null);
         if (invention == null){
             return ResponseEntity.notFound().build();
         }
@@ -110,7 +110,7 @@ public class InventionsController {
     }
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteInvention(@PathVariable int id){
-        Inventions invention = repo.findById(id).orElse(null);
+        Invention invention = repo.findById(id).orElse(null);
         if (invention == null){
             return ResponseEntity.notFound().build();
         }

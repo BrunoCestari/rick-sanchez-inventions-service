@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-public class InventionsDto {
+public class InventionDto {
     @NotEmpty (message = "The name is required.")
     private String name;
 
