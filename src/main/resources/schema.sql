@@ -1,9 +1,9 @@
 CREATE TABLE inventions (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  category VARCHAR(255) DEFAULT NULL,
-  created_at TIMESTAMP DEFAULT NULL,
+  category VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL,
   description TEXT,
-  name VARCHAR(255) DEFAULT NULL,
+  name VARCHAR(255) NOT NULL,
   price DOUBLE NOT NULL
 );
 
