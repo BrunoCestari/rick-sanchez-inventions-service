@@ -108,7 +108,15 @@ public class InventionsController {
 
         return ResponseEntity.ok(invention);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteInvention(@PathVariable int id){
+        Inventions invention = repo.findById(id).orElse(null);
+        if (invention == null){
+            return ResponseEntity.notFound().build();
+        }
+        repo.delete(invention);
+        return ResponseEntity.ok().build();
 
-
+    }
 
 }
