@@ -71,4 +71,44 @@ public class InventionsController {
         return ResponseEntity.ok(inventions);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updateInvention(
+            @PathVariable int id,
+            @Valid @RequestBody InventionsDto inventionDto,
+            BindingResult result
+    )   {
+        Inventions invention = repo.findById(id).orElse(null);
+        if (invention == null){
+            return ResponseEntity.notFound().build();
+        }
+        double price = 0;
+        try{
+            price = Double.parseDouble(inventionDto.getPrice());
+        }catch (Exception ex){
+            result.addError(new FieldError("inventionDto", "price",
+                    "The price should be a number."));
+        }
+        if(result.hasErrors()) {
+            var errorsList = result.getAllErrors();
+            var errorsMap = new HashMap<String, String>();
+
+            for (int i = 0; i < errorsList.size(); i++) {
+                var error = (FieldError) errorsList.get(i);
+                errorsMap.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errorsMap);
+        }
+
+        invention.setName(inventionDto.getName());
+        invention.setCategory(inventionDto.getCategory());
+        invention.setPrice(price);
+        invention.setDescription(inventionDto.getDescription());
+
+        repo.save(invention);
+
+        return ResponseEntity.ok(invention);
+    }
+
+
+
 }
