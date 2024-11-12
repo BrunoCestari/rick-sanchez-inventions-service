@@ -35,7 +35,7 @@ API for managing Rick Sanchez's crazy inventions (CRUD).
 ```
 - Run:
 ```
-java -jar place-service/target/place-service-0.0.1-SNAPSHOT.jar
+java -jar place-service/target/rick-sanchez-inventions-service-0.0.1-SNAPSHOT.jar
 ```
 
 
