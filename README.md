@@ -56,7 +56,7 @@ The API will be accessible at [localhost:8080](http://localhost:8080).
 ```
 - Run the container:
 ```
-docker run --name place-service -p 8080:8080  -d place-service:0.0.1-SNAPSHOT
+docker run --name rick-sanchez-inventions-service -p 8080:8080  -d rick-sanchez-inventions-service:0.0.1-SNAPSHOT
 ```
 
 The API can be accessed at [localhost:8080](http://localhost:8080).
@@ -94,6 +94,8 @@ Content-Type: application/json
 ```
 
 ### GET /api/inventions/{id}
+**Expected Response (id = 1)**:
+
 ```
 HTTP/1.1 200 OK
 Content-Length: 178
@@ -110,6 +112,7 @@ Content-Type: application/json
 ```
 
 ### GET /api/inventions
+**Expected Response**:
 
 
 ```
@@ -150,7 +153,7 @@ transfer-encoding: chunked
     "description": "Updated description"
 }
 ```
-**Expected Response**:
+**Expected Response (id = 1)**:
 
 ```
 HTTP/1.1 200 OK
@@ -168,10 +171,10 @@ Content-Type: application/json
 ```
 
 ### DELETE /api/inventions/{id}
+**Expected Response (id = 1)**:
 
 
 ```
-http DELETE :8080/api/inventions/1
 
 HTTP/1.1 200 OK
 Content-Length: 0
