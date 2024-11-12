@@ -65,10 +65,20 @@ The API can be accessed at [localhost:8080](http://localhost:8080).
 
 To make the HTTP requests below, you can use a tool like [Postman](https://www.postman.com/):
 
-- POST /api/inventions
+### POST /api/inventions/{id}
+**Request Body (JSON):**
 ```
-http POST :8080/api/inventions name="Portal Gun" category="Device" price="50000000" description="Allows instant travel between dimensions"
+{
+    "name": "Portal Gun",
+    "category": "Device",
+    "price": 50000000,
+    "description": "Allows instant travel between dimensions"
+}
 
+``` 
+**Expected Response**:
+
+```
 HTTP/1.1 200 OK
 Content-Length: 178
 Content-Type: application/json
@@ -81,10 +91,9 @@ Content-Type: application/json
     "description": "Allows instant travel between dimensions",
     "id": 1
 }
-
 ```
 
-- GET /api/inventions/{id}
+### GET /api/inventions/{id}
 ```
 HTTP/1.1 200 OK
 Content-Length: 178
@@ -100,7 +109,8 @@ Content-Type: application/json
 }
 ```
 
-- GET /api/inventions
+### GET /api/inventions
+
 
 ```
 http :8080/api/inventions
@@ -129,11 +139,20 @@ transfer-encoding: chunked
 ]
 ```
 
-- PUT /api/inventions/{id}
+### PUT /api/inventions/{id}
+**Request Body (JSON):**
 
 ```
-http PUT :8080/api/inventions/1 name="Updated Portal Gun" category="Advanced Device" price="55000000" description="Updated description"
+{
+    "name": "Updated Portal Gun",
+    "category": "Advanced Device",
+    "price": 55000000,
+    "description": "Updated description"
+}
+```
+**Expected Response**:
 
+```
 HTTP/1.1 200 OK
 Content-Length: 183
 Content-Type: application/json
@@ -148,7 +167,7 @@ Content-Type: application/json
 }
 ```
 
-- DELETE /api/inventions/{id}
+### DELETE /api/inventions/{id}
 
 
 ```
