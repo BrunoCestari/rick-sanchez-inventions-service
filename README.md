@@ -27,36 +27,38 @@ API for managing Rick Sanchez's crazy inventions (CRUD).
 ## How to Run
 
 ### Locally
-- Clone the git repository
-- Build the project:
+1. Clone the git repository
+```
+git clone https://github.com/BrunoCestari/rick-sanchez-inventions-service.git
+```
+2. Build the project:
 
 ```
 ./mvnw clean package
 ```
-- Run:
+3. Change to /target directory:
 ```
-java -jar place-service/target/rick-sanchez-inventions-service-0.0.1-SNAPSHOT.jar
+cd target 
 ```
-
+4. Run:
+```
+java -jar ick-sanchez-inventions-service/target/rick-sanchez-inventions-service-0.0.1-SNAPSHOT.jar
+```
 
 The API will be accessible at [localhost:8080](http://localhost:8080).  
 
 
 ### Docker
 
-- Clone the git repository
-- Build the project:
+If you want run in Docker, repeat steps 1 and 2 above (clone and build). Then:
 
-```
-./mvnw clean package
-```
-- Build the image:
+Build the image:
 ```
 ./mvnw spring-boot:build-image
 ```
-- Run the container:
+Run the container:
 ```
-docker run --name rick-sanchez-inventions-service -p 8080:8080  -d rick-sanchez-inventions-service:0.0.1-SNAPSHOT
+docker run -d -p 8080:8080 rick-sanchez-inventions-service:0.0.1-SNAPSHOT
 ```
 
 The API can be accessed at [localhost:8080](http://localhost:8080).
